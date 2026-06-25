@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import {SidebarProvider, SidebarTrigger} from "@/components/ui/sidebar"
 import {AppSidebar} from "@/app/components/sidebar"
+import { TooltipProvider } from "@/components/ui/tooltip";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -24,6 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <TooltipProvider>
     <SidebarProvider>
       <AppSidebar />
       <html>
@@ -35,5 +37,6 @@ export default function RootLayout({
 </body>
 </html>
     </SidebarProvider>
+    </TooltipProvider>
   );
 }
