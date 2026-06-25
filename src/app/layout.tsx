@@ -29,7 +29,7 @@ export default function RootLayout({
       <html>
         <body className={`${geistMono.variable} ${geistSans.variable} font-sans`}>
   <main>
-  <SidebarTrigger />
+  <SidebarTrigger  className="cursor-pointer"/>
   {children}
 </main>
 </body>
