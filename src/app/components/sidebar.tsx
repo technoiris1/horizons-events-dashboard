@@ -8,49 +8,75 @@ import {
     SidebarMenuButton,
     SidebarMenuItem
   } from "@/components/ui/sidebar"
-import {ChevronDown} from 'lucide-react' 
+
+import {ChevronDown, CalendarDays, ChartColumnIncreasing, Users} from 'lucide-react' 
 import {DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
-  export function AppSidebar() {
-    return (
-      <Sidebar collapsible="icon" ><Sidebar>
+
+
+
+const analytics=[
+  {name: "Event Analytics",
+    icon: ChartColumnIncreasing
+  }
+
+  ,
+  
+  {name: "Participant Analytics",
+    icon: Users
+  }
+]
+
+export function AppSidebar() {
+  return (
+    <Sidebar collapsible="icon">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
-              <DropdownMenuTrigger asChild className="cursor-pointer">
-                <SidebarMenuButton>
-                  Select Event
-                  <ChevronDown className="ml-auto" />
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>
+          <SidebarMenuButton className="cursor-pointer">
+            <CalendarDays className="size-4 shrink-0" />
+            <span>Select Event</span>
+            <ChevronDown className="ml-auto" />
+          </SidebarMenuButton>
+        </DropdownMenuTrigger>
+
               <DropdownMenuContent className="w-[--radix-popper-anchor-width]">
                 <DropdownMenuItem className="cursor-pointer">
-                  <span>Arcana</span>
+                  Arcana
                 </DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer">
-                  <span>Equinox</span>
+                  Equinox
                 </DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer">
-                  <span>Polaris</span>
+                  Polaris
                 </DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer">
-                  <span>Crux</span>
+                  Crux
                 </DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer">
-                  <span>Europa</span>
+                  Europa
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
+
+      <SidebarContent>
+      <SidebarMenu>
+  {analytics.map((stat) => (
+    <SidebarMenuItem  key={stat.name}>
+      <SidebarMenuButton className="cursor-pointer">
+        <stat.icon className="size-4" />
+        <span>{stat.name}</span>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
+  ))}
+</SidebarMenu>
+      </SidebarContent>
+
+      <SidebarFooter />
     </Sidebar>
-        <SidebarHeader />
-        <SidebarContent>
-          <SidebarGroup />
-          <SidebarGroup />
-        </SidebarContent>
-        <SidebarFooter />
-      </Sidebar>
-    )
-  }
+  )
+}
