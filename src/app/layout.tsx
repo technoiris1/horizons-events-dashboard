@@ -27,8 +27,8 @@ export default function RootLayout({
     <SidebarProvider>
       <AppSidebar />
       <html>
-        <body>
-<main>
+        <body className={`${geistMono.variable} ${geistSans.variable} font-sans`}>
+  <main>
   <SidebarTrigger />
   {children}
 </main>
