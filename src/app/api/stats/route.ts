@@ -21,7 +21,10 @@ export async function GET() {
       success: true,
       count: participants.length,
       approvedHours: approvedHours,
-      loggedHours: loggedHours
+      loggedHours: loggedHours,
+      rejectedHours : rejectedHours,
+      inreviewHours: inreviewHours,
+      unsubmittedHours : unsubmittedHours
     });
   } catch (err) {
     console.error(err);

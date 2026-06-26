@@ -5,13 +5,18 @@ import {
   CheckCircle,
 } from "lucide-react";
 
+import HoursPieChart from "@/app/components/hours-pie-chart";
+
 interface Stats {
   success: boolean;
   count: number;
   approvedHours: number;
   loggedHours: number;
-}
 
+  rejectedHours: number;
+  inreviewHours: number;
+  unsubmittedHours: number;
+}
 export default async function Home() {
   const res = await fetch("http://localhost:3000/api/stats", {
     cache: "no-store",
@@ -93,6 +98,20 @@ export default async function Home() {
           </CardContent>
         </Card>
 
+        <Card className="rounded-xl shadow-sm">
+  <CardHeader>
+    <CardTitle>Tracked Hours Breakdown</CardTitle>
+  </CardHeader>
+
+  <CardContent>
+    <HoursPieChart
+      approved={stats.approvedHours}
+      rejected={stats.rejectedHours}
+      inReview={stats.inreviewHours}
+      unsubmitted={stats.unsubmittedHours}
+    />
+  </CardContent>
+</Card>
       </div>
     </div>
   );
