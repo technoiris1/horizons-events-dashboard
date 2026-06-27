@@ -1,104 +1,112 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Users,
-  Clock3,
-  CheckCircle,
-} from "lucide-react";
+  import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+  import {
+    Users,
+    Clock3,
+    CheckCircle,
+  } from "lucide-react";
 
-import HoursPieChart from "@/app/components/hours-pie-chart";
+  import HoursPieChart from "@/app/components/hours-pie-chart";
+  import CountryPieChart from "@/app/components/countries-pie-chart"
+  interface Stats {
+    success: boolean;
+    count: number;
+    approvedHours: number;
+    loggedHours: number;
 
-interface Stats {
-  success: boolean;
-  count: number;
-  approvedHours: number;
-  loggedHours: number;
-
-  rejectedHours: number;
-  inreviewHours: number;
-  unsubmittedHours: number;
-}
-export default async function Home() {
-  const res = await fetch("http://localhost:3000/api/stats", {
-    cache: "no-store",
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
+    rejectedHours: number;
+    inreviewHours: number;
+    unsubmittedHours: number;
+    countries: {
+      country: string;
+      count: number;
+    }[];
   }
+  export default async function Home() {
+    const res = await fetch("http://localhost:3000/api/stats", {
+      cache: "no-store",
+    });
 
-  const stats: Stats = await res.json();
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
 
-  return (
-    <div className="flex flex-col gap-8 p-8">
+    const stats: Stats = await res.json();
 
-      <div className="flex items-center gap-4">
-        <img
-          src="https://horizons.hackclub.com/logos/arcana.webp"
-          alt="Arcana"
-          className="h-12 w-auto"
-        />
+    return (
+      <div className="flex flex-col gap-8 p-8">
 
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">
-            Horizons Arcana
-          </h1>
+        <div className="flex items-center gap-4">
+          <img
+            src="https://horizons.hackclub.com/logos/arcana.webp"
+            alt="Arcana"
+            className="h-12 w-auto"
+          />
 
-          <p className="text-muted-foreground">
-            Participant Analytics Dashboard
-          </p>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">
+              Horizons Arcana
+            </h1>
+
+            <p className="text-muted-foreground">
+              deets abt your event ig
+            </p>
+          </div>
         </div>
-      </div>
-      <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3">
 
-        <Card className="rounded-xl shadow-sm">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Total Signups
-            </CardTitle>
+          <Card className="rounded-xl shadow-sm">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+              <CardTitle className="text-sm font-medium text-muted-foreground">
+                Total Signups
+              </CardTitle>
 
-            <Users className="h-5 w-5 text-muted-foreground" />
-          </CardHeader>
+              <Users className="h-5 w-5 text-muted-foreground" />
+            </CardHeader>
 
-          <CardContent>
-            <div className="text-5xl font-bold tracking-tight">
-              {stats.count.toLocaleString()}
-            </div>
-          </CardContent>
-        </Card>
+            <CardContent>
+              <div className="text-5xl font-bold tracking-tight">
+                {stats.count.toLocaleString()}
+              </div>
+            </CardContent>
+          </Card>
 
-        <Card className="rounded-xl shadow-sm">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Approved Hours
-            </CardTitle>
+          <Card className="rounded-xl shadow-sm">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+              <CardTitle className="text-sm font-medium text-muted-foreground">
+                Approved Hours
+              </CardTitle>
 
-            <CheckCircle className="h-5 w-5 text-muted-foreground" />
-          </CardHeader>
+              <CheckCircle className="h-5 w-5 text-muted-foreground" />
+            </CardHeader>
 
-          <CardContent>
-            <div className="text-5xl font-bold tracking-tight">
-              {Math.round(stats.approvedHours).toLocaleString()}
-            </div>
-          </CardContent>
-        </Card>
+            <CardContent>
+              <div className="text-5xl font-bold tracking-tight">
+                {Math.round(stats.approvedHours).toLocaleString()}
+              </div>
+            </CardContent>
+          </Card>
 
-        <Card className="rounded-xl shadow-sm">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Tracked Hours
-            </CardTitle>
+          <Card className="rounded-xl shadow-sm">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+              <CardTitle className="text-sm font-medium text-muted-foreground">
+                Tracked Hours
+              </CardTitle>
 
-            <Clock3 className="h-5 w-5 text-muted-foreground" />
-          </CardHeader>
+              <Clock3 className="h-5 w-5 text-muted-foreground" />
+            </CardHeader>
 
-          <CardContent>
-            <div className="text-5xl font-bold tracking-tight">
-              {Math.round(stats.loggedHours).toLocaleString()}
-            </div>
-          </CardContent>
-        </Card>
+            <CardContent>
+              <div className="text-5xl font-bold tracking-tight">
+                {Math.round(stats.loggedHours).toLocaleString()}
+              </div>
+            </CardContent>
+          </Card>
 
-        <Card className="rounded-xl shadow-sm">
+
+        </div>
+        <div className="grid gap-6 xl:grid-cols-2">
+
+<Card className="rounded-xl shadow-sm">
   <CardHeader>
     <CardTitle>Tracked Hours Breakdown</CardTitle>
   </CardHeader>
@@ -112,7 +120,20 @@ export default async function Home() {
     />
   </CardContent>
 </Card>
+
+<Card className="rounded-xl shadow-sm">
+  <CardHeader>
+    <CardTitle>Participants by Country</CardTitle>
+  </CardHeader>
+
+  <CardContent>
+    <CountryPieChart
+      countries={stats.countries}
+    />
+  </CardContent>
+</Card>
+
+</div>
       </div>
-    </div>
-  );
-}
+    );
+  }
