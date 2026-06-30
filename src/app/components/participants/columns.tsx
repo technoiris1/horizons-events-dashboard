@@ -14,11 +14,11 @@ function sortableHeader(label: string, column: any) {
       onClick={() => {
         const sorted = column.getIsSorted();
         if (sorted === false) {
-          column.toggleSorting(true); // first click → desc
+          column.toggleSorting(true); 
         } else if (sorted === "desc") {
-          column.toggleSorting(false); // second click → asc
+          column.toggleSorting(false); 
         } else {
-          column.clearSorting(); // third click → clear
+          column.clearSorting(); 
         }
       }}
     >
@@ -32,11 +32,12 @@ const hourCell = (key: string) => ({
   cell: ({ row }: any) => (
     <div className="text-right font-medium">
       {Number(row.getValue(key)).toFixed(1)}
-    </div>
+    </div> 
   ),
 });
 
 export const columns: ColumnDef<Participant>[] = [
+
   {
     accessorKey: "Display Name",
     header: ({ column }) => sortableHeader("Participant", column),

@@ -1,113 +1,100 @@
-    "use client";
+"use client";
 
-    import * as React from "react";
+import * as React from "react";
 
-    import {
-    ColumnDef,
-    flexRender,
-    getCoreRowModel,
-    getSortedRowModel,
-    SortingState,
-    useReactTable,
-    } from "@tanstack/react-table";
+import {
+ColumnDef,
+flexRender,
+getCoreRowModel,
+getSortedRowModel,
+SortingState,
+useReactTable,
+} from "@tanstack/react-table";
 
-    import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-    } from "@/components/ui/table";
+import {
+Table,
+TableBody,
+TableCell,
+TableHead,
+TableHeader,
+TableRow,
+} from "@/components/ui/table";
 
-    interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<TData, TValue>[];
-    data: TData[];
-    }
+interface DataTableProps<TData, TValue> {
+columns: ColumnDef<TData, TValue>[];
+data: TData[];
+}
 
-    export default function DataTable<TData, TValue>({
-    columns,
+export default function DataTable<TData, TValue>({
+columns,
+data,
+}: DataTableProps<TData, TValue>) {
+const [sorting, setSorting] = React.useState<SortingState>([]);
+
+const table = useReactTable({
     data,
-    }: DataTableProps<TData, TValue>) {
-    const [sorting, setSorting] = React.useState<SortingState>([]);
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onSortingChange: setSorting,
+    enableMultiSort: true,
+    sortDescFirst: true, 
+    state: {
+        sorting,
+    },
+    });
+return (
+    <div className="rounded-xl border bg-background shadow-sm overflow-hidden">
 
-    const table = useReactTable({
-        data,
-        columns,
-        getCoreRowModel: getCoreRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        onSortingChange: setSorting,
-        enableMultiSort: true,
-        sortDescFirst: true,  // ← first click sorts descending
-        state: {
-          sorting,
-        },
-      });
-    return (
-        <div className="rounded-xl border bg-background shadow-sm overflow-hidden">
+    <Table>
 
-        <Table>
+        <TableHeader className="bg-muted/50">
 
-            <TableHeader className="bg-muted/50">
+        {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id}>
+            <TableHead className="w-12">#</TableHead>
+            {headerGroup.headers.map((header) => (
+                <TableHead key={header.id}>
 
-            {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
+                {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                    )}
 
-                {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id}>
-
-                    {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                        )}
-
-                    </TableHead>
-                ))}
-
-                </TableRow>
+                </TableHead>
             ))}
 
-            </TableHeader>
+            </TableRow>
+        ))}
 
-            <TableBody>
+        </TableHeader>
 
-            {table.getRowModel().rows.length ? (
-                table.getRowModel().rows.map((row) => (
-                <TableRow
-                    key={row.id}
-                    className="hover:bg-muted/40"
-                >
-                    {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+<TableBody>
+{table.getRowModel().rows.length ? (
+table.getRowModel().rows.map((row, index) => (
+    <TableRow key={row.id} className="hover:bg-muted/40">
+    <TableCell className="text-muted-foreground tabular-nums">
+        {index + 1}
+    </TableCell>
+    {row.getVisibleCells().map((cell) => (
+        <TableCell key={cell.id}>
+        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+        </TableCell>
+    ))}
+    </TableRow>
+))
+) : (
+<TableRow>
+    <TableCell colSpan={columns.length + 1} className="h-24 text-center">
+    No participants found.
+    </TableCell>
+</TableRow>
+)}
+</TableBody>
+    </Table>
 
-                        {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                        )}
-
-                    </TableCell>
-                    ))}
-                </TableRow>
-                ))
-            ) : (
-                <TableRow>
-
-                <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                >
-                    No participants found.
-                </TableCell>
-
-                </TableRow>
-            )}
-
-            </TableBody>
-
-        </Table>
-
-        </div>
-    );
-    }
+    </div>
+);
+}
