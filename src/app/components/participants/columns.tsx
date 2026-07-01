@@ -40,7 +40,7 @@ export const columns: ColumnDef<Participant>[] = [
 
   {
     accessorKey: "Display Name",
-    header: ({ column }) => sortableHeader("Participant", column),
+    header: "Display Name",
     cell: ({ row }) => (
       <div className="font-medium">
         {String(row.getValue("Display Name"))}
