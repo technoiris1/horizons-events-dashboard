@@ -1,5 +1,5 @@
 "use client";
-
+import {numericFilterFn} from "./data-table";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
@@ -69,29 +69,34 @@ export const columns: ColumnDef<Participant>[] = [
     accessorKey: "Approved hours",
     header: ({ column }) => sortableHeader("Approved", column),
     ...hourCell("Approved hours"),
+      filterFn: numericFilterFn,
   },
 
   {
     accessorKey: "Hours in review",
     header: ({ column }) => sortableHeader("Review", column),
     ...hourCell("Hours in review"),
+      filterFn: numericFilterFn,
   },
 
   {
     accessorKey: "Un-submitted hours",
     header: ({ column }) => sortableHeader("Unsubmitted", column),
     ...hourCell("Un-submitted hours"),
+      filterFn: numericFilterFn,
   },
 
   {
     accessorKey: "Submitted hours",
     header: ({ column }) => sortableHeader("Submitted", column),
     ...hourCell("Submitted hours"),
+      filterFn: numericFilterFn,
   },
 
   {
     accessorKey: "Tracked hours",
     header: ({ column }) => sortableHeader("Tracked", column),
     ...hourCell("Tracked hours"),
+      filterFn: numericFilterFn,
   },
 ];
