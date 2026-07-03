@@ -31,7 +31,8 @@ function sortableHeader(label: string, column: any) {
 const hourCell = (key: string) => ({
   cell: ({ row }: any) => (
     <div className="text-right font-medium">
-      {Number(row.getValue(key)).toFixed(1)}
+       {Number(row.getValue(key)).toFixed(1)}
+
     </div> 
   ),
 });
@@ -43,7 +44,10 @@ export const columns: ColumnDef<Participant>[] = [
     header: "Display Name",
     cell: ({ row }) => (
       <div className="font-medium">
+        <a href={`https://hackclub.enterprise.slack.com/team/${row.original["Slack ID"]}`} target="_blank" className="hover:underline">
+     
         {String(row.getValue("Display Name"))}
+        </a>
       </div>
     ),
   },
