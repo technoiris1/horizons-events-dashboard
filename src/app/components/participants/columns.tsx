@@ -57,7 +57,9 @@ export const columns: ColumnDef<Participant>[] = [
     header: "Email",
     cell: ({ row }) => (
       <div className="text-muted-foreground">
+        <a href={`mailto:${row.original["Email"]}`} target="_blank" className="hover:underline">
         {String(row.getValue("Email"))}
+        </a>
       </div>
     ),
   },
