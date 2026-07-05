@@ -85,7 +85,7 @@ function SearchFieldToggle({
       <button
         type="button"
         onClick={() => onChange("Display Name")}
-        className={`relative z-10 flex-1 rounded-full py-1.5 text-center transition-colors duration-200 ${
+        className={`relative z-10 cursor-pointer flex-1 rounded-full py-1.5 text-center transition-colors duration-200 ${
           value === "Display Name" ? "text-foreground" : "text-muted-foreground"
         }`}
       >
@@ -94,7 +94,7 @@ function SearchFieldToggle({
       <button
         type="button"
         onClick={() => onChange("Email")}
-        className={`relative z-10 flex-1 rounded-full py-1.5 text-center transition-colors duration-200 ${
+        className={`relative z-10 flex-1 rounded-full py-1.5 text-center cursor-pointer transition-colors duration-200 ${
           value === "Email" ? "text-foreground" : "text-muted-foreground"
         }`}
       >
@@ -141,7 +141,7 @@ function NumericFiltersBar({
                 </select>
                 <input
                   type="number"
-                  step="0.1"
+                  step="1"
                   value={filter.value}
                   onChange={(e) => onChange(key, { ...filter, value: e.target.value })}
                   placeholder="hrs"
@@ -257,9 +257,9 @@ export default function DataTable<TData, TValue>({
           <SearchFieldToggle value={searchField} onChange={setSearchField} />
         </div>
 
-        <Button variant="outline" size="sm" onClick={handleExport} className="gap-2">
+        <Button variant="outline" size="sm" onClick={handleExport} className="gap-2 bg-green-700 text-white hover:bg-green-300 cursor-pointer border-none">
           <Download className="h-4 w-4" />
-          Export CSV
+          Export as CSV
         </Button>
       </div>
 
