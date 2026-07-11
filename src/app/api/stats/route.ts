@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import {loadParticipants} from "@/lib/csv"
+import { getParticipants } from "@/lib/participants";
 
 export async function GET() {
   try {
-    const participants = await loadParticipants();
+    const participants = await getParticipants();
     let approvedHours = 0
     let loggedHours = 0
     let inreviewHours = 0

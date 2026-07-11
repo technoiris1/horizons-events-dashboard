@@ -162,24 +162,20 @@ function NumericFiltersBar({
   );
 }
 
-function escapeCsv(val: unknown) {
-  const str = String(val ?? "");
-  return /[",\n]/.test(str) ? `"${str.replace(/"/g, '""')}"` : str;
-}
+function exportRowsToJSON(rows: { original: any }[]) {
+  const payload = rows.map((row) =>
+    Object.fromEntries(
+      ALL_EXPORT_COLUMNS.map((field) => [field, row.original[field]])
+    )
+  );
 
-function exportRowsToCSV(rows: { original: any }[]) {
-  const csv = [
-    ALL_EXPORT_COLUMNS.join(","),
-    ...rows.map((row) =>
-      ALL_EXPORT_COLUMNS.map((h) => escapeCsv(row.original[h])).join(",")
-    ),
-  ].join("\n");
-
-  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {
+    type: "application/json;charset=utf-8;",
+  });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = `arcana-participants-${new Date().toISOString().slice(0, 10)}.csv`;
+  link.download = `arcana-participants-${new Date().toISOString().slice(0, 10)}.json`;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -241,7 +237,7 @@ export default function DataTable<TData, TValue>({
   const handleClearFilters = () => setNumericFilters({});
 
   const handleExport = () => {
-    exportRowsToCSV(table.getRowModel().rows);
+    exportRowsToJSON(table.getRowModel().rows);
   };
 
   return (
@@ -283,7 +279,7 @@ export default function DataTable<TData, TValue>({
 
         <Button variant="outline" size="sm" onClick={handleExport} className="gap-2 bg-green-600 text-white hover:text-white hover:bg-green-700 cursor-pointer border-none">
           <Download className="h-4 w-4" />
-          Export as CSV
+          Export data
         </Button>
       </div>
 
