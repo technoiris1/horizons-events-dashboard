@@ -11,7 +11,7 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { Download } from "lucide-react";
+import { Download, XIcon } from "lucide-react";
 
 import {
   Table,
@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 type Operator = ">" | ">=" | "<" | "<=" | "=";
 
 interface NumericFilterValue {
@@ -131,7 +131,7 @@ function NumericFiltersBar({
                   onChange={(e) =>
                     onChange(key, { ...filter, operator: e.target.value as Operator })
                   }
-                  className="border-r bg-transparent px-2 text-sm text-muted-foreground focus:outline-none"
+                  className="border-r bg-transparent px-2 text-sm text-muted-foreground focus:outline-none  cursor-pointer  "
                 >
                   <option value=">">{">"}</option>
                   <option value=">=">{"\u2265"}</option>
@@ -145,7 +145,7 @@ function NumericFiltersBar({
                   value={filter.value}
                   onChange={(e) => onChange(key, { ...filter, value: e.target.value })}
                   placeholder="hrs"
-                  className="w-20 bg-transparent px-2 py-1.5 text-sm focus:outline-none"
+                  className="w-20 bg-transparent px-2 py-1.5 text-sm focus:outline-none  cursor-text"
                 />
               </div>
             </div>
@@ -153,7 +153,7 @@ function NumericFiltersBar({
         })}
 
         {hasActiveFilters && (
-          <Button variant="ghost" size="sm" onClick={onClear} className="text-muted-foreground">
+          <Button variant="ghost" size="sm" onClick={onClear} className="text-muted-foreground  cursor-pointer">
             Clear filters
           </Button>
         )}
@@ -247,17 +247,41 @@ export default function DataTable<TData, TValue>({
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <Input
-            placeholder={`Search by ${searchField === "Display Name" ? "name" : "email"}...`}
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-            className="max-w-sm"
-          />
-          <SearchFieldToggle value={searchField} onChange={setSearchField} />
-        </div>
+<div className="flex items-center gap-2">
+  <div className="w-full max-w-sm">
+    <InputGroup>
+      <InputGroupInput
+        placeholder={`Search by ${
+          searchField === "Display Name" ? "name" : "email"
+        }...`}
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+      />
 
-        <Button variant="outline" size="sm" onClick={handleExport} className="gap-2 bg-green-700 text-white hover:bg-green-300 cursor-pointer border-none">
+      {searchValue && (
+        <InputGroupAddon align="inline-end">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            onClick={() => setSearchValue("")}
+            className="text-muted-foreground hover:bg-transparent"
+          >
+            <XIcon className="h-4 w-4" />
+            <span className="sr-only">Clear search</span>
+          </Button>
+        </InputGroupAddon>
+      )}
+    </InputGroup>
+  </div>
+
+  <SearchFieldToggle
+    value={searchField}
+    onChange={setSearchField}
+  />
+</div>
+
+        <Button variant="outline" size="sm" onClick={handleExport} className="gap-2 bg-green-600 text-white hover:text-white hover:bg-green-700 cursor-pointer border-none">
           <Download className="h-4 w-4" />
           Export as CSV
         </Button>
