@@ -7,30 +7,10 @@
 
   import HoursPieChart from "@/app/components/hours-pie-chart";
   import CountryPieChart from "@/app/components/countries-pie-chart"
-  interface Stats {
-    success: boolean;
-    count: number;
-    approvedHours: number;
-    loggedHours: number;
+  import { getStats } from "@/lib/stats";
 
-    rejectedHours: number;
-    inreviewHours: number;
-    unsubmittedHours: number;
-    countries: {
-      country: string;
-      count: number;
-    }[];
-  }
   export default async function Home() {
-    const res = await fetch("http://localhost:3000/api/stats", {
-      cache: "no-store",
-    });
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
-    }
-
-    const stats: Stats = await res.json();
+    const stats = await getStats();
 
     return (
       <div className="flex flex-col gap-8 p-8">
