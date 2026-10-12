@@ -7,6 +7,9 @@ export default async function ParticipantsPage() {
 
   return (
     <div className="p-8">
+      <div className="mb-6 rounded-xl border-4 border-yellow-400 bg-yellow-300 px-6 py-4 text-center text-3xl font-black uppercase tracking-wide text-yellow-950 shadow-lg">
+        THIS IS DUMMY DATA
+      </div>
       <DataTable
         columns={columns}
         data={participants}

@@ -1,8 +1,16 @@
 import Airtable from "airtable";
 
+const apiKey = process.env.AIRTABLE_API_KEY;
+const baseId = process.env.AIRTABLE_BASE_ID;
+
+if (!apiKey || !baseId) {
+  throw new Error(
+    "Missing Airtable env vars. Set AIRTABLE_API_KEY and AIRTABLE_BASE_ID in .env.local."
+  );
+}
+
 Airtable.configure({
-  apiKey: process.env.AIRTABLE_API_KEY!,
+  apiKey,
 });
 
-export const base_auth = Airtable.base(process.env.AIRTABLE_BASE_ID_AUTH!);
-export const base = Airtable.base(process.env.AIRTABLE_BASE_ID!);
+export const base = Airtable.base(baseId);

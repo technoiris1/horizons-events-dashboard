@@ -34,6 +34,9 @@
 
     return (
       <div className="flex flex-col gap-8 p-8">
+        <div className="rounded-xl border-4 border-yellow-400 bg-yellow-300 px-6 py-4 text-center text-3xl font-black uppercase tracking-wide text-yellow-950 shadow-lg">
+          THIS IS DUMMY DATA
+        </div>
 
         <div className="flex items-center gap-4">
           <img
